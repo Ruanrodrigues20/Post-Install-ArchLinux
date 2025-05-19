@@ -39,14 +39,6 @@ Post-Install-Linux/
 Run one of the following one-liners in your terminal:
 
 ```bash
-bash <(curl -sSL https://raw.githubusercontent.com/Ruanrodrigues20/Post-Install-ArchLinux/main/main.sh)
-```
-
-```bash
-bash <(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/Post-Install-ArchLinux/main/main.sh)
-```
-
-```bash
 git clone https://github.com/Ruanrodrigues20/Post-Install-ArchLinux.git && cd Post-Install-ArchLinux && bash ./main.sh
 ```
 
