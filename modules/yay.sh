@@ -46,6 +46,7 @@ install_packages(){
         "gnome-tweaks"
         "libreoffice-fresh" 
         "libreoffice-fresh-pt-br"
+        "postman-bin"
     )
 
     # Instala os pacotes essenciais
