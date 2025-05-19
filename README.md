@@ -47,7 +47,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/Post-Install-
 ```
 
 ```bash
-git clone https://github.com/Ruanrodrigues20/Post-Install-ArchLinux.git && cd Post-Install-ArchLinux && ./main.sh
+git clone https://github.com/Ruanrodrigues20/Post-Install-ArchLinux.git && cd Post-Install-ArchLinux && bash ./main.sh
 ```
 
 > ⚠️ `yay` must be installed before running this script.
