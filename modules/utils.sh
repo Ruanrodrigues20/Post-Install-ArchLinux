@@ -7,7 +7,7 @@ install() {
         if ! pacman -Qi "$dep" &> /dev/null; then
             echo -e "\e[33m$dep is not installed. Installing with yay...\e[0m"
             # Redirecionando a saída para /dev/null e mostrando erro apenas em caso de falha
-            if yay -S --noconfirm "$dep" &> /dev/null; then
+            if yay -S --noconfirm "$dep"; then
                 echo -e "\e[32m✔️  $dep installed successfully.\e[0m"
             else
                 echo -e "\e[31m❌  Failed to install $dep.\e[0m"

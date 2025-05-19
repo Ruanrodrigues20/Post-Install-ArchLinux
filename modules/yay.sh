@@ -22,6 +22,7 @@ install_packages(){
 
     local packages=(
         "bash-completion"
+        "firefox"
         "git"
         "wget"
         "curl"
@@ -43,7 +44,8 @@ install_packages(){
         "tlp-rdw"
         "archlinux-wallpaper"
         "gnome-tweaks"
-        "gnome-shell-extension-manager"
+        "libreoffice-fresh" 
+        "libreoffice-fresh-pt-br"
     )
 
     # Instala os pacotes essenciais

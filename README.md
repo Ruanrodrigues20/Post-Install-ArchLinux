@@ -14,7 +14,6 @@ Post-Install-ArchLinux/
     ├── directories.sh
     ├── flatpak.sh
     ├── git.sh
-    ├── internet.sh
     ├── theme.sh
     ├── tlp.sh
     ├── utils.sh

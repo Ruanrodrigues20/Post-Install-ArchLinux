@@ -12,7 +12,7 @@ main() {
     show_intro_message
     check_internet_connection
 
-    #setup_yay
+    setup_yay
     install_packages
     install_flatpaks
     gtk_theme
@@ -26,4 +26,4 @@ main() {
     ask_to_restart
 }
 
-main
+install_packages
