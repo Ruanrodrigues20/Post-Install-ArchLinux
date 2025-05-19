@@ -1,0 +1,58 @@
+# 🛠️ Post-Install-ArchLinux
+
+This is a **post-install automation script for Arch Linux-based systems**, designed to streamline the configuration of a fresh installation.
+
+## 📁 Project Structure
+
+```
+Post-Install-ArchLinux/
+├── main.sh               # Main script that sources and runs all modules
+├── LICENSE.txt           # License file
+├── wallpapers/           # Directory for wallpapers
+└── modules/              # Modular scripts for each setup task
+    ├── aliases.sh
+    ├── directories.sh
+    ├── flatpak.sh
+    ├── git.sh
+    ├── internet.sh
+    ├── theme.sh
+    ├── tlp.sh
+    ├── utils.sh
+    ├── wallpapers.sh
+    └── yay.sh
+```
+
+## 🚀 What It Does
+
+- ✅ Checks internet connection  
+- 📦 Installs essential packages using `yay` (**required**)  
+- 📦 Installs Flatpak applications  
+- 🎨 Applies GTK themes  
+- 🧑‍💻 Configures Git  
+- 🔧 Sets up aliases and useful tools  
+- 📂 Creates standard directories  
+- 🔋 Configures power-saving with TLP  
+- 🖼️ Applies wallpapers  
+- 📃 Shows a summary and asks to restart  
+
+## ▶️ Quick Usage
+
+Run one of the following one-liners in your terminal:
+
+```bash
+bash <(curl -sSL https://raw.githubusercontent.com/Ruanrodrigues20/Post-Install-ArchLinux/main/main.sh)
+```
+
+```bash
+bash <(wget -qO- https://raw.githubusercontent.com/Ruanrodrigues20/Post-Install-ArchLinux/main/main.sh)
+```
+
+```bash
+git clone https://github.com/Ruanrodrigues20/Post-Install-ArchLinux.git && cd Post-Install-ArchLinux && ./main.sh
+```
+
+> ⚠️ `yay` must be installed before running this script.
+
+## 📜 License
+
+See `LICENSE.txt` for license information.
