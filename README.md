@@ -1,11 +1,11 @@
-# 🛠️ Post-Install-ArchLinux
+# 🛠️ Post-Install-Linux
 
-This is a **post-install automation script for Arch Linux-based systems**, designed to streamline the configuration of a fresh installation.
+This is a **post-install automation script for Arch Linux-based and Debian-based systems**, designed to streamline the configuration of a fresh installation.
 
 ## 📁 Project Structure
 
 ```
-Post-Install-ArchLinux/
+Post-Install-Linux/
 ├── main.sh               # Main script that sources and runs all modules
 ├── LICENSE.txt           # License file
 ├── wallpapers/           # Directory for wallpapers
@@ -18,13 +18,13 @@ Post-Install-ArchLinux/
     ├── tlp.sh
     ├── utils.sh
     ├── wallpapers.sh
-    └── yay.sh
+    └── install_packages.sh
 ```
 
 ## 🚀 What It Does
 
 - ✅ Checks internet connection  
-- 📦 Installs essential packages using `yay` (**required**)  
+- 📦 Installs essential packages using `yay` or using `apt`
 - 📦 Installs Flatpak applications  
 - 🎨 Applies GTK themes  
 - 🧑‍💻 Configures Git  

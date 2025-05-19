@@ -1,0 +1,8 @@
+bash-completion
+git
+wget
+curl
+vim
+tree
+vlc
+fastfetch

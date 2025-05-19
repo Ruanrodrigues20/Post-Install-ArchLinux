@@ -1,0 +1,17 @@
+snapd
+python3-pip
+python3-venv
+python3-poetry
+openjdk-21-jdk
+maven
+gnome-builder
+gnome-tweaks
+gnome-software-plugin-flatpak
+gnome-software-plugin-deb
+gnome-software-plugin-snap
+gnome-shell-extension-manager
+gnome-shell-extension-appindicator
+gnome-shell-extension-dashtodock
+gnome-shell-extension-blur-my-shell
+gnome-shell-extension-caffeine
+gnome-shell-extension-user-theme

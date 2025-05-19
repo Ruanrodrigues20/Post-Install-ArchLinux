@@ -8,13 +8,17 @@ done
 
 
 main() {
+    detect_distro  # ← detecta a base do sistema
+
     show_logo
     show_intro_message
     check_internet_connection
 
     setup_yay
     install_packages
+    downloads
     install_flatpaks
+    snaps_install
     gtk_theme
     setup_aliases_and_tools
     git_config
@@ -26,4 +30,4 @@ main() {
     ask_to_restart
 }
 
-install_packages
+main

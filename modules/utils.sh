@@ -1,36 +1,8 @@
-install() {
-    local packages=("$@")  # Recebe a lista de pacotes como argumento
-    for dep in "${packages[@]}"; do
-        echo ""  # Salta uma linha antes de cada pacote
-
-        # Verificar se o pacote está instalado usando pacman
-        if ! pacman -Qi "$dep" &> /dev/null; then
-            echo -e "\e[33m$dep is not installed. Installing with yay...\e[0m"
-            # Redirecionando a saída para /dev/null e mostrando erro apenas em caso de falha
-            if yay -S --noconfirm "$dep"; then
-                echo -e "\e[32m✔️  $dep installed successfully.\e[0m"
-            else
-                echo -e "\e[31m❌  Failed to install $dep.\e[0m"
-            fi
-        else
-            echo -e "\e[32m✔️  $dep is already installed.\e[0m"
-        fi
-    done
-}
-
-
-install_f(){
-     # Loop para instalar as aplicações
-    for app in "${apps[@]}"; do
-        echo -e "\e[33mInstalling $app...\e[0m"
-        flatpak install -y flathub "$app"
-    done
-}
-
+#!bin/bash
 
 # Welcome message
 show_intro_message(){
-    echo -e "\e[1;34m🎉 Welcome! Starting the Arch Linux post-installation setup... 🚀\e[0m"
+    echo -e "\e[1;34m🎉 Welcome! Starting the Arch Linux/Debian post-installation setup... 🚀\e[0m"
     echo "This script will install essential software, themes, aliases,"
     echo "developer tools, and configure your system for productivity."
     echo ""
@@ -52,7 +24,8 @@ show_intro_message(){
 show_summary() {
     echo -e "\e[1;34m===== 📋 Post-Installation Summary =====\e[0m"
     echo -e "\e[1;32m✔\e[0m System updated"
-    echo -e "\e[1;32m✔\e[0m yay installed"
+    echo -e "\e[1;32m✔\e[0m yay installed (Arch Linux only)"
+    echo -e "\e[1;32m✔\e[0m Snap applications installed (Based Debian distro)"
     echo -e "\e[1;32m✔\e[0m Essential packages installed"
     echo -e "\e[1;32m✔\e[0m Flatpak applications installed"
     echo -e "\e[1;32m✔\e[0m WhiteSur GTK theme installed"
@@ -105,3 +78,87 @@ check_internet_connection() {
         exit 1
     fi
 }
+
+
+remove_trava(){
+    sudo rm -f /var/lib/dpkg/lock-frontend
+    sudo rm -f /var/lib/dpkg/lock
+    sudo rm -f /var/cache/apt/archives/lock
+    sudo rm -f /var/lib/apt/lists/lock
+    sudo dpkg --configure -a
+}
+
+update(){
+    echo -e "\e[1;34m===== 🔥 Updating System =====\e[0m"
+    echo ""
+    remove_trava
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt autoremove -y
+    sudo apt clean
+}
+
+
+install() {
+    local packages=("$@")
+
+    if [ "$DISTRO" = "debian" ]; then
+        remove_trava
+    fi
+
+    for pkg in "${packages[@]}"; do
+        echo ""
+        echo -e "\e[33mInstalling $pkg...\e[0m"
+        install_pkg "$pkg"
+    done
+}
+
+
+install_pkg() {
+    local pkg="$1"
+    if [ "$DISTRO" = "arch" ]; then
+        if ! pacman -Qi "$pkg" &> /dev/null; then
+            yay -S --noconfirm "$pkg"
+        else
+            echo -e "\e[32m✔️  $pkg is already installed.\e[0m"
+        fi
+    elif [ "$DISTRO" = "debian" ]; then
+        if ! dpkg -l | grep -E "^ii\s+$pkg" &> /dev/null; then
+            sudo apt install -y "$pkg"
+        else
+            echo -e "\e[32m✔️  $pkg is already installed.\e[0m"
+        fi
+    else
+        echo "Distribuição não suportada para instalação."
+        return 1
+    fi
+}
+
+
+install_f(){
+    for app in "${apps[@]}"; do
+        echo -e "\e[33mInstalling $app...\e[0m"
+        flatpak install -y flathub "$app"
+    done
+}
+
+detect_distro() {
+    if command -v apt &> /dev/null; then
+        DISTRO="debian"
+    elif command -v pacman &> /dev/null; then
+        DISTRO="arch"
+    else
+        echo "Distribution not supported."
+        exit 1
+    fi
+}
+
+
+detect_battery() {
+    if [ -d "/sys/class/power_supply/BAT0" ] || [ -d "/sys/class/power_supply/BAT1" ]; then
+        return 0  # Sucesso: bateria detectada
+    else
+        return 1  # Falha: nenhuma bateria detectada
+    fi
+}
+
