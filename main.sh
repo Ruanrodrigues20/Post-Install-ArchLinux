@@ -14,12 +14,12 @@ main() {
     show_intro_message
     check_internet_connection
 
-    setup_yay
+    #setup_yay
     install_packages
     downloads
     install_flatpaks
     snaps_install
-    gtk_theme
+    #gtk_theme
     setup_aliases_and_tools
     git_config
     setup_directories
