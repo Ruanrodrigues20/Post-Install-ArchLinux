@@ -25,6 +25,7 @@ main() {
     setup_directories
     setup_tlp
     wallpapers
+    configs
 	
     show_summary
     ask_to_restart

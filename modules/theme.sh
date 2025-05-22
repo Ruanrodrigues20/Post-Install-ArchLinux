@@ -53,7 +53,14 @@ gtk_theme(){
     sudo ./install-wallpapers.sh
     cd ..
 	
-	configs
+	gsettings set org.gnome.desktop.interface gtk-theme 'WhiteSur-Dark-blue' && echo "✅ GTK theme applied." || echo "❌ Failed to apply GTK theme."
+	gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark' && echo "✅ Icon theme applied." || echo "❌ Failed to apply icon theme."
+	gsettings set org.gnome.desktop.interface cursor-theme 'WhiteSur-cursors'
+	gsettings set org.gnome.desktop.interface accent-color 'blue'
+	gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
+	gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/sequoia-dark.jpg"
+	gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/sequoia-dark.jpg"
+	
     echo "Installation of WhiteSur GTK theme completed."
 
 }
@@ -62,14 +69,6 @@ gtk_theme(){
 configs(){
 	gsettings set org.gnome.desktop.interface show-battery-percentage  true
 	gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
-	gsettings set org.gnome.desktop.interface gtk-theme 'WhiteSur-Dark-blue' && echo "✅ GTK theme applied." || echo "❌ Failed to apply GTK theme."
-	gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark' && echo "✅ Icon theme applied." || echo "❌ Failed to apply icon theme."
-	gsettings set org.gnome.desktop.interface cursor-theme 'WhiteSur-cursors'
-	gsettings set org.gnome.desktop.interface accent-color 'blue'
-	gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/sequoia-dark.jpg"
-	gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/sequoia-dark.jpg"
-	gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
-	
 	gsettings set org.gnome.shell favorite-apps "[
 				  'org.gnome.Nautilus.desktop',
 				  'firefox.desktop',
