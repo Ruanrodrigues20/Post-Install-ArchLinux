@@ -1,12 +1,16 @@
 python-pip
 firefox
+gnome-shell-extension-alphabetical-grid-extension
+gnome-shell-extension-appindicator
+gnome-shell-extension-blur-my-shell
+gnome-shell-extension-compiz-alike-magic-lamp-effect-git
+gnome-shell-extension-compiz-windows-effect-git
+gnome-shell-extension-dash2dock-lite
+gnome-shell-extension-dash-to-dock
+gnome-shell-extension-desktop-cube-git
 visual-studio-code-bin
 intellij-idea-ultimate-edition
-gnome-shell-extension-alphabetical-grid-extension
 ttf-ms-fonts
-gnome-shell-extension-blur-my-shell
-gnome-shell-extension-appindicator
-gnome-shell-extension-compiz-alike-magic-lamp-effect-git
 flatpak
 tlp
 tlp-rdw
@@ -15,3 +19,4 @@ gnome-tweaks
 libreoffice-fresh
 libreoffice-fresh-pt-br
 postman-bin
+obs-studio

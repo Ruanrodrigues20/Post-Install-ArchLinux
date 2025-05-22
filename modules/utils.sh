@@ -162,3 +162,6 @@ detect_battery() {
     fi
 }
 
+
+
+

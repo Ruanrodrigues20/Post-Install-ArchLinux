@@ -8,24 +8,24 @@ done
 
 
 main() {
-    detect_distro  # ← detecta a base do sistema
+    detect_distro
 
     show_logo
     show_intro_message
     check_internet_connection
 
-    #setup_yay
+    setup_yay
     install_packages
     downloads
     install_flatpaks
     snaps_install
-    #gtk_theme
+    gtk_theme
     setup_aliases_and_tools
     git_config
     setup_directories
     setup_tlp
     wallpapers
-
+	
     show_summary
     ask_to_restart
 }
