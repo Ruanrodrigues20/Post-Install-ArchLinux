@@ -61,6 +61,7 @@ gtk_theme(){
 
 configs(){
 	gsettings set org.gnome.desktop.interface show-battery-percentage  true
+	gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
 	gsettings set org.gnome.desktop.interface gtk-theme 'WhiteSur-Dark-blue' && echo "✅ GTK theme applied." || echo "❌ Failed to apply GTK theme."
 	gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark' && echo "✅ Icon theme applied." || echo "❌ Failed to apply icon theme."
 	gsettings set org.gnome.desktop.interface cursor-theme 'WhiteSur-cursors'
