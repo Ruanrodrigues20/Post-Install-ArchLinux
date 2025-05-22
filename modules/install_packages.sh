@@ -79,6 +79,10 @@ install_flatpaks(){
     
     # Lista de aplicativos para instalar
     apps=("com.discordapp.Discord" "org.gnome.DejaDup")
+    if [ "$DISTRO" = "debian" ]; then
+    	apps+=("com.getpostman.Postman")
+    fi
+    
     install_f "${apps[@]}"
 }
 
@@ -97,6 +101,9 @@ downloads(){
         wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.8.1_all.deb
         sudo apt install ./*.deb -y
         rm *.deb
+        
+        git clone https://github.com/Ruanrodrigues20/intelliJ-install && cd intellij-install && bash install.sh
+
     fi
 }
 

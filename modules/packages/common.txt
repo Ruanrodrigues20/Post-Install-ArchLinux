@@ -6,3 +6,6 @@ vim
 tree
 vlc
 fastfetch
+obs-studio
+tlp
+tlp-rdw

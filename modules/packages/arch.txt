@@ -12,11 +12,8 @@ visual-studio-code-bin
 intellij-idea-ultimate-edition
 ttf-ms-fonts
 flatpak
-tlp
-tlp-rdw
 archlinux-wallpaper
 gnome-tweaks
 libreoffice-fresh
 libreoffice-fresh-pt-br
 postman-bin
-obs-studio
