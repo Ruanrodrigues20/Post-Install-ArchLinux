@@ -97,3 +97,46 @@ downloads(){
         rm *.deb
     fi
 }
+
+install() {
+    local packages=("$@")
+
+    if [ "$DISTRO" = "debian" ]; then
+        remove_trava
+    fi
+
+    for pkg in "${packages[@]}"; do
+        echo ""
+        echo -e "\e[33mInstalling $pkg...\e[0m"
+        install_pkg "$pkg"
+    done
+}
+
+
+install_pkg() {
+    local pkg="$1"
+    if [ "$DISTRO" = "arch" ]; then
+        if ! pacman -Qi "$pkg" &> /dev/null; then
+            yay -S --noconfirm "$pkg"
+        else
+            echo -e "\e[32m✔️  $pkg is already installed.\e[0m"
+        fi
+    elif [ "$DISTRO" = "debian" ]; then
+        if ! dpkg -l | grep -E "^ii\s+$pkg" &> /dev/null; then
+            sudo apt install -y "$pkg"
+        else
+            echo -e "\e[32m✔️  $pkg is already installed.\e[0m"
+        fi
+    else
+        echo "Distribuição não suportada para instalação."
+        return 1
+    fi
+}
+
+
+install_f(){
+    for app in "${apps[@]}"; do
+        echo -e "\e[33mInstalling $app...\e[0m"
+        flatpak install -y flathub "$app"
+    done
+}
