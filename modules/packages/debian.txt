@@ -3,9 +3,8 @@ python3-pip
 python3-venv
 python3-poetry
 openjdk-21-jdk
-maven
-gnome-builder
-gnome-tweaks
+imagemagick
+python3-pip
 gnome-software-plugin-flatpak
 gnome-software-plugin-deb
 gnome-software-plugin-snap
@@ -15,4 +14,4 @@ gnome-shell-extension-dashtodock
 gnome-shell-extension-blur-my-shell
 gnome-shell-extension-caffeine
 gnome-shell-extension-user-theme
-imagemagick
+gnome-shell-extension-manager

@@ -48,9 +48,8 @@ install_packages() {
 
 
 snaps_install() {
-    local snaps=("postman" "intellij-idea-ultimate" "code")
-
     if [ "$DISTRO" = "debian" ]; then
+        local snaps=("postman")
         echo -e "\e[1;34m===== 🔥 Installing Snap Applications =====\e[0m"
         for snap in "${snaps[@]}"; do
             echo ""  # Linha em branco para separar visualmente
@@ -99,10 +98,13 @@ downloads(){
         install_firefox_deb
         wget https://github.com/fastfetch-cli/fastfetch/releases/download/2.42.0/fastfetch-linux-amd64.deb
         wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.8.1_all.deb
+        wget https://vscode.download.prss.microsoft.com/dbazure/download/stable/848b80aeb52026648a8ff9f7c45a9b0a80641e2e/code_1.100.2-1747260578_amd64.deb
+        
         sudo apt install ./*.deb -y
         rm *.deb
         
-        git clone https://github.com/Ruanrodrigues20/intelliJ-install && cd intellij-install && bash install.sh
+        git clone https://github.com/Ruanrodrigues20/intelliJ-install && cd intelliJ-install && bash install.sh
+        cd ..
 
     fi
 }

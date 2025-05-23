@@ -1,4 +1,3 @@
-python-pip
 firefox
 gnome-shell-extension-alphabetical-grid-extension
 gnome-shell-extension-appindicator
@@ -8,6 +7,8 @@ gnome-shell-extension-compiz-windows-effect-git
 gnome-shell-extension-dash2dock-lite
 gnome-shell-extension-dash-to-dock
 gnome-shell-extension-desktop-cube-git
+gnome-shell-extension-prefs 
+python-pip
 visual-studio-code-bin
 intellij-idea-ultimate-edition
 ttf-ms-fonts

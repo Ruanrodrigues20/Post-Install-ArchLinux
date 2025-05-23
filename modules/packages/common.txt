@@ -9,3 +9,6 @@ fastfetch
 obs-studio
 tlp
 tlp-rdw
+maven
+gnome-tweaks
+
