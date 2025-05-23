@@ -15,3 +15,4 @@ gnome-shell-extension-dashtodock
 gnome-shell-extension-blur-my-shell
 gnome-shell-extension-caffeine
 gnome-shell-extension-user-theme
+imagemagick

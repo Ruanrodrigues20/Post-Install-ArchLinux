@@ -26,7 +26,7 @@ gtk_theme(){
     sudo ./tweaks.sh -F 
     sudo ./tweaks.sh -f
     sudo ./tweaks.sh -g 
-    cp ../WhiteSur-wallpapers/4k/sequoia-dark.jpg ./
+    cp ~/.local/share/backgrounds/sequoia-dark.jpg ./
     sudo ./tweaks.sh -g -nb -b "sequoia-dark.jpg"
        
     sudo flatpak override --filesystem=xdg-config/gtk-3.0 && sudo flatpak override --filesystem=xdg-config/gtk-4.0
@@ -66,70 +66,3 @@ gtk_theme(){
 }
 
 
-configs(){
-	gsettings set org.gnome.desktop.interface show-battery-percentage  true
-	gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
-	gsettings set org.gnome.shell favorite-apps "[
-				  'org.gnome.Nautilus.desktop',
-				  'firefox.desktop',
-				  'org.gnome.Console.desktop',
-				  'code.desktop',
-				  'jetbrains-idea.desktop',
-				  'org.gnome.TextEditor.desktop',
-				  'com.discordapp.Discord.desktop',
-				  'com.obsproject.Studio.desktop',
-				  'org.gnome.Software.desktop',
-				  'org.gnome.Settings.desktop',
-				  'org.gnome.tweaks.desktop'
-				]"
-
-	# Define as pastas visíveis no grid
-	gsettings set org.gnome.desktop.app-folders folder-children "['System', 'Office']"
-
-	### ----- Pasta: System -----
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name 'System'
-
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ apps "[
-	  'htop.desktop',
-	  'org.gnome.Loupe.desktop',
-	  'org.gnome.Logs.desktop',
-	  'org.freedesktop.MalcontentControl.desktop',
-	  'qv4l2.desktop',
-	  'qvidcap.desktop',
-	  'org.gnome.Tour.desktop',
-	  'vim.desktop',
-	  'org.gnome.Epiphany.desktop',
-	  'avahi-discover.desktop',
-	  'bssh.desktop',
-	  'bvnc.desktop',
-	  'nm-connection-editor.desktop',
-	  'org.gnome.Characters.desktop',
-	  'org.gnome.Connections.desktop',
-	  'org.gnome.baobab.desktop',
-	  'org.gnome.font-viewer.desktop',
-	  'yelp.desktop'
-	]"
-
-	### ----- Pasta: Office -----
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name 'Office'
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
-
-	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ apps "[
-	  'libreoffice-writer.desktop',
-	  'libreoffice-calc.desktop',
-	  'libreoffice-impress.desktop',
-	  'libreoffice-draw.desktop',
-	  'libreoffice-math.desktop',
-	  'libreoffice-base.desktop',
-	  'libreoffice-startcenter.desktop',
-	  'libreoffice-xsltfilter.desktop'
-	]"
-
-	
-	
-
-
-
-
-	
-}

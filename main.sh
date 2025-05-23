@@ -15,17 +15,17 @@ main() {
     check_internet_connection
 
     setup_yay
-    install_packages
-    downloads
-    install_flatpaks
-    snaps_install
+    #install_packages
+    #downloads
+    #install_flatpaks
+    #snaps_install
     gtk_theme
-    setup_aliases_and_tools
-    git_config
+    #setup_aliases_and_tools
+    #git_config
     setup_directories
-    setup_tlp
-    wallpapers
-    configs
+    #setup_tlp
+    #wallpapers
+    #configs
 	
     show_summary
     ask_to_restart

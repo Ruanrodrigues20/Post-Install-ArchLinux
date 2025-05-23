@@ -173,3 +173,105 @@ setup_tlp() {
     fi
 
 }
+
+
+configs(){
+	gsettings set org.gnome.desktop.interface show-battery-percentage  true
+	gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+	gsettings set org.gnome.shell favorite-apps "[
+				  'org.gnome.Nautilus.desktop',
+				  'firefox.desktop',
+				  'org.gnome.Console.desktop',
+				  'code.desktop',
+				  'jetbrains-idea.desktop',
+				  'org.gnome.TextEditor.desktop',
+				  'com.discordapp.Discord.desktop',
+				  'com.obsproject.Studio.desktop',
+				  'org.gnome.Software.desktop',
+				  'org.gnome.Settings.desktop',
+				  'org.gnome.tweaks.desktop'
+				]"
+
+	# Define as pastas visíveis no grid
+	gsettings set org.gnome.desktop.app-folders folder-children "['System', 'Office']"
+
+	### ----- Pasta: System -----
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ name 'System'
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/System/ apps "[
+	  'htop.desktop',
+	  'org.gnome.Loupe.desktop',
+	  'org.gnome.Logs.desktop',
+	  'org.freedesktop.MalcontentControl.desktop',
+	  'qv4l2.desktop',
+	  'qvidcap.desktop',
+	  'org.gnome.Tour.desktop',
+	  'vim.desktop',
+	  'org.gnome.Epiphany.desktop',
+	  'avahi-discover.desktop',
+	  'bssh.desktop',
+	  'bvnc.desktop',
+	  'nm-connection-editor.desktop',
+	  'org.gnome.Characters.desktop',
+	  'org.gnome.Connections.desktop',
+	  'org.gnome.baobab.desktop',
+	  'org.gnome.font-viewer.desktop',
+	  'yelp.desktop'
+	]"
+
+	### ----- Pasta: Office -----
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ name 'Office'
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ translate true
+
+	gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/Office/ apps "[
+	  'libreoffice-writer.desktop',
+	  'libreoffice-calc.desktop',
+	  'libreoffice-impress.desktop',
+	  'libreoffice-draw.desktop',
+	  'libreoffice-math.desktop',
+	  'libreoffice-base.desktop',
+	  'libreoffice-startcenter.desktop',
+	  'libreoffice-xsltfilter.desktop'
+	]"
+	
+	set_profile_picture_current_user
+}
+
+
+set_profile_picture_current_user() {
+  if [ "$DISTRO" = "debian" ]; then
+
+    local user="$USER"
+    local home_dir="$HOME"
+    local svg_path="$home_dir/.face"
+    local png_path="$home_dir/.face.png"
+    local icon_path="/var/lib/AccountsService/icons/$user"
+    local user_conf_path="/var/lib/AccountsService/users/$user"
+
+    if [ ! -f "$svg_path" ]; then
+      return 1
+    fi
+
+    # Converte SVG para PNG
+    convert "$svg_path" "$png_path" || {
+      return 1
+    }
+
+    # Copia PNG para accountsservice
+    sudo cp "$png_path" "$icon_path" || {
+      return 1
+    }
+
+    # Cria arquivo de configuração do usuário no accountsservice
+    sudo bash -c "cat > '$user_conf_path'" <<EOF
+[User]
+Icon=$icon_path
+EOF
+
+    # Ajusta permissões
+    sudo chmod 644 "$icon_path"
+    sudo chown root:root "$icon_path"
+
+  fi
+}
+
