@@ -275,3 +275,11 @@ EOF
   fi
 }
 
+
+
+set_configs_fastfetch(){
+    unzip modules/fast.zip
+    rm -rf ~/.config/fastfetch
+    mv .config/fastfetch ~/.config/
+    rm -rf .config
+}

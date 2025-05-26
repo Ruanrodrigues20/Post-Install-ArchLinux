@@ -26,8 +26,8 @@ gtk_theme(){
     sudo ./tweaks.sh -F 
     sudo ./tweaks.sh -f
     sudo ./tweaks.sh -g 
-    cp ~/.local/share/backgrounds/sequoia-dark.jpg ./
-    sudo ./tweaks.sh -g -nb -b "sequoia-dark.jpg"
+    cp ~/.local/share/backgrounds/sequoia.jpeg ./
+    sudo ./tweaks.sh -g -nb -b "sequoia.jpeg"
        
     sudo flatpak override --filesystem=xdg-config/gtk-3.0 && sudo flatpak override --filesystem=xdg-config/gtk-4.0
     cd ..
