@@ -15,6 +15,10 @@ setup_yay() {
         sudo pacman -S --noconfirm --needed base-devel git
         git clone https://aur.archlinux.org/yay.git
         cd yay && makepkg -si --noconfirm
+        yay -Sy --aur --devel --timeupdate
+        rm -rf ~/.cache/yay/completion.cache
+        yay -Syu
+        ls -lh ~/.cache/yay/completion.cache
         cd .. && rm -rf yay
     fi
 }
