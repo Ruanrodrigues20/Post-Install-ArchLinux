@@ -3,24 +3,8 @@ set -e
 
 source modules/utils.sh
 
-
-setup_yay() {
-    if [[ "$DISTRO" != "arch" ]]; then
-        echo "Yay é específico para Arch. Pulando..."
-        return
-    fi
-
-    if ! command -v yay &>/dev/null; then
-        echo "Instalando yay..."
-        sudo pacman -S --noconfirm --needed base-devel git
-        git clone https://aur.archlinux.org/yay.git
-        cd yay && makepkg -si --noconfirm
-        yay -Sy --aur --devel --timeupdate
-        rm -rf ~/.cache/yay/completion.cache
-        yay -Syu
-        ls -lh ~/.cache/yay/completion.cache
-        cd .. && rm -rf yay
-    fi
+install_ohmybash() {
+    ( bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" )
 }
 
 
@@ -140,45 +124,3 @@ install_firefox_deb(){
     sudo apt update && sudo apt install firefox 
 }
 
-install() {
-    local packages=("$@")
-
-    if [ "$DISTRO" = "debian" ]; then
-        remove_trava
-    fi
-
-    for pkg in "${packages[@]}"; do
-        echo ""
-        echo -e "\e[33mInstalling $pkg...\e[0m"
-        install_pkg "$pkg"
-    done
-}
-
-
-install_pkg() {
-    local pkg="$1"
-    if [ "$DISTRO" = "arch" ]; then
-        if ! pacman -Qi "$pkg" &> /dev/null; then
-            yay -S --noconfirm "$pkg"
-        else
-            echo -e "\e[32m✔️  $pkg is already installed.\e[0m"
-        fi
-    elif [ "$DISTRO" = "debian" ]; then
-        if ! dpkg -l | grep -E "^ii\s+$pkg" &> /dev/null; then
-            sudo apt install -y "$pkg"
-        else
-            echo -e "\e[32m✔️  $pkg is already installed.\e[0m"
-        fi
-    else
-        echo "Distribuição não suportada para instalação."
-        return 1
-    fi
-}
-
-
-install_f(){
-    for app in "${apps[@]}"; do
-        echo -e "\e[33mInstalling $app...\e[0m"
-        flatpak install -y flathub "$app"
-    done
-}

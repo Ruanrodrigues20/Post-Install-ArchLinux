@@ -10,7 +10,9 @@ gtk_theme(){
     fi
 
     echo "Installing WhiteSur GTK theme..."
+    mkdir -p resources
 
+    cd resources/
     git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
     git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
     git clone https://github.com/vinceliuice/WhiteSur-wallpapers.git
@@ -52,7 +54,8 @@ gtk_theme(){
     sudo ./install-gnome-backgrounds.sh
     sudo ./install-wallpapers.sh
     cd ..
-	
+    
+	cd ..
 	gsettings set org.gnome.desktop.interface gtk-theme 'WhiteSur-Dark-blue' && echo "✅ GTK theme applied." || echo "❌ Failed to apply GTK theme."
 	gsettings set org.gnome.desktop.interface icon-theme 'WhiteSur-dark' && echo "✅ Icon theme applied." || echo "❌ Failed to apply icon theme."
 	gsettings set org.gnome.desktop.interface cursor-theme 'WhiteSur-cursors'
@@ -62,6 +65,7 @@ gtk_theme(){
 	gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/sequoia-dark.jpg"
 	
     echo "Installation of WhiteSur GTK theme completed."
+
 
 }
 

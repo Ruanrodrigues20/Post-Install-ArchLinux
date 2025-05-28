@@ -11,4 +11,6 @@ tlp
 tlp-rdw
 maven
 gnome-tweaks
+flatpak
+firefox
 

@@ -80,6 +80,29 @@ check_internet_connection() {
 }
 
 
+setup_yay() {
+    if [[ "$DISTRO" != "arch" ]]; then
+        echo "Yay é específico para Arch. Pulando..."
+        return
+    fi
+    
+    if ! command -v yay &>/dev/null; then
+        echo "Instalando yay..."
+        sudo pacman -S --noconfirm --needed base-devel git
+        mkdir -p resources
+        cd resources
+        git clone https://aur.archlinux.org/yay.git
+        cd yay && makepkg -si --noconfirm
+        yay -Sy --aur --devel --timeupdate
+        rm -rf ~/.cache/yay/completion.cache
+        yay -Syu
+        cd .. && rm -rf yay
+        cd ..
+    fi
+}
+
+
+
 remove_trava(){
     sudo rm -f /var/lib/dpkg/lock-frontend
     sudo rm -f /var/lib/dpkg/lock
@@ -121,7 +144,6 @@ detect_battery() {
 
 
 
-
 git_config(){
     echo "Are you sure you want to set up git? (y/n)"
     read -p "Enter your choice: " choice
@@ -142,7 +164,31 @@ git_config(){
     git config --global user.email "$email"
 
     echo "Git config set successfully."
+
+    echo "Do you want to generate a new SSH key for Git? (y/n)"
+    read -p "Enter your choice: " ssh_choice
+    if [[ "$ssh_choice" == "y" || "$ssh_choice" == "Y" ]]; then
+        ssh_key_path="$HOME/.ssh/id_ed25519"
+
+        if [[ -f "$ssh_key_path" ]]; then
+            echo "SSH key already exists at $ssh_key_path"
+        else
+            ssh-keygen -t ed25519 -C "$email" -f "$ssh_key_path" -N ""
+            echo "SSH key generated at $ssh_key_path"
+        fi
+
+        eval "$(ssh-agent -s)"
+        ssh-add "$ssh_key_path"
+
+        echo "Public key:"
+        cat "${ssh_key_path}.pub"
+
+        echo "Now add the above public key to your Git provider (e.g., GitHub, GitLab)."
+    else
+        echo "Skipping SSH key generation."
+    fi
 }
+
 
 setup_tlp() {
     if ! detect_battery; then
@@ -176,6 +222,9 @@ setup_tlp() {
 
 
 configs(){
+
+    mkdir -p ~/Projects ~/Downloads ~/Documents ~/Pictures ~/Videos ~/Music ~/Desktop
+
 	gsettings set org.gnome.desktop.interface show-battery-percentage  true
 	gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
 	gsettings set org.gnome.shell favorite-apps "[
@@ -278,8 +327,52 @@ EOF
 
 
 set_configs_fastfetch(){
-    unzip modules/fast.zip
+    unzip resources/fast.zip
     rm -rf ~/.config/fastfetch
     mv .config/fastfetch ~/.config/
     rm -rf .config
+}
+
+
+install() {
+    local packages=("$@")
+
+    if [ "$DISTRO" = "debian" ]; then
+        remove_trava
+    fi
+
+    for pkg in "${packages[@]}"; do
+        echo ""
+        echo -e "\e[33mInstalling $pkg...\e[0m"
+        install_pkg "$pkg"
+    done
+}
+
+
+install_pkg() {
+    local pkg="$1"
+    if [ "$DISTRO" = "arch" ]; then
+        if ! pacman -Qi "$pkg" &> /dev/null; then
+            yay -S --noconfirm "$pkg"
+        else
+            echo -e "\e[32m✔️  $pkg is already installed.\e[0m"
+        fi
+    elif [ "$DISTRO" = "debian" ]; then
+        if ! dpkg -l | grep -E "^ii\s+$pkg" &> /dev/null; then
+            sudo apt install -y "$pkg"
+        else
+            echo -e "\e[32m✔️  $pkg is already installed.\e[0m"
+        fi
+    else
+        echo "Distribuição não suportada para instalação."
+        return 1
+    fi
+}
+
+
+install_f(){
+    for app in "${apps[@]}"; do
+        echo -e "\e[33mInstalling $app...\e[0m"
+        flatpak install -y flathub "$app"
+    done
 }
