@@ -9,16 +9,18 @@ Post-Install-Linux/
 ├── main.sh               # Main script that sources and runs all modules
 ├── LICENSE.txt           # License file
 ├── wallpapers/           # Directory for wallpapers
-└── modules/              # Modular scripts for each setup task
-    ├── aliases.sh
-    ├── directories.sh
-    ├── flatpak.sh
-    ├── git.sh
+├── modules/              # Modular scripts for each setup task
+    ├── configs.sh
+    ├── install_packages.sh
     ├── theme.sh
-    ├── tlp.sh
-    ├── utils.sh
-    ├── wallpapers.sh
-    └── install_packages.sh
+    └── utils.sh
+├── packages/
+    ├── arch.txt
+    ├── common.txt
+    └── debian.txt
+└── resources
+    └── fast.zip
+
 ```
 
 ## 🚀 What It Does
