@@ -13,4 +13,3 @@ maven
 gnome-tweaks
 flatpak
 firefox
-

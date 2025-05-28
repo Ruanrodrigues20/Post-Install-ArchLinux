@@ -6,15 +6,20 @@ for module in modules/*.sh; do
     source "$module"
 done
 
-
-main() {
+setup(){
+    check_internet_connection
     detect_distro
+    mkdir -p resources
+
+}
+
+
+main() { 
     show_logo
     show_intro_message
-    check_internet_connection
     
     #Inicial Setup
-    mkdir -p resources
+    setup
     install_ohmybash
     setup_yay
 
@@ -35,9 +40,9 @@ main() {
     configs_keyboard
     set_configs_fastfetch
 
-
     show_summary
     ask_to_restart
 }
 
 main
+

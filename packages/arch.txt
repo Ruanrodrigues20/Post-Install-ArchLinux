@@ -4,7 +4,6 @@ visual-studio-code-bin
 gnome-tweaks
 libreoffice-fresh-pt-br
 ttf-ms-fonts
-ttf-jetbrains-mono 
 ttf-jetbrains-mono-nerd
 intellij-idea-ultimate-edition
 gnome-shell-extension-alphabetical-grid-extension
