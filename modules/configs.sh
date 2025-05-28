@@ -1,5 +1,140 @@
 #!/bin/bash
 
+
+###########################################################################################
+#Configs fot the program
+
+git_config(){
+    echo "Are you sure you want to set up git? (y/n)"
+    read -p "Enter your choice: " choice
+    if [[ "$choice" != "y" && "$choice" != "Y" ]]; then
+        echo "Skipping git setup."
+        return
+    fi
+
+    echo "Setting up git..."
+
+    read -p "Enter your user name: " name
+    echo "Your user name is: $name"
+
+    read -p "Enter your email: " email
+    echo "Your email is: $email"
+
+    git config --global user.name "$name"
+    git config --global user.email "$email"
+
+    echo "Git config set successfully."
+
+    echo "Do you want to generate a new SSH key for Git? (y/n)"
+    read -p "Enter your choice: " ssh_choice
+    if [[ "$ssh_choice" == "y" || "$ssh_choice" == "Y" ]]; then
+        ssh_key_path="$HOME/.ssh/id_ed25519"
+
+        if [[ -f "$ssh_key_path" ]]; then
+            echo "SSH key already exists at $ssh_key_path"
+        else
+            ssh-keygen -t ed25519 -C "$email" -f "$ssh_key_path" -N ""
+            echo "SSH key generated at $ssh_key_path"
+        fi
+
+        eval "$(ssh-agent -s)"
+        ssh-add "$ssh_key_path"
+
+        echo "Public key:"
+        cat "${ssh_key_path}.pub"
+
+        echo "Now add the above public key to your Git provider (e.g., GitHub, GitLab)."
+    else
+        echo "Skipping SSH key generation."
+    fi
+}
+
+
+setup_tlp() {
+    if ! detect_battery; then
+        echo -e "\e[33m⚠️  No battery detected. Skipping TLP installation.\e[0m"
+        return 0
+    fi
+
+    echo -e "\n\e[34m🔧 Installing TLP and dependencies...\e[0m"
+
+    if [[ "$DISTRO" == "arch" ]]; then
+        yay -S --noconfirm tlp tlp-rdw &> /dev/null
+        echo -e "\e[32m✔️  TLP installed successfully on Arch.\e[0m"
+        echo -e "\n\e[34m🔌 Enabling TLP service...\e[0m"
+        sudo systemctl enable tlp.service &> /dev/null
+        sudo systemctl start tlp.service &> /dev/null
+
+    elif [[ "$DISTRO" == "debian" ]]; then
+        sudo apt install -y tlp &> /dev/null
+        echo -e "\e[32m✔️  TLP installed successfully on Debian.\e[0m"
+        remove_trava
+        sudo apt install -y tlp tlp-rdw
+        sudo systemctl enable tlp
+        sudo systemctl start tlp
+        sudo tlp-stat -s
+    else
+        echo -e "\e[31m❌  Unsupported distribution for installing TLP.\e[0m"
+        return 1
+    fi
+
+}
+
+set_configs_fastfetch(){
+    unzip resources/fast.zip
+    rm -rf ~/.config/fastfetch
+    mv .config/fastfetch ~/.config/
+    rm -rf .config
+}
+
+
+configs_wallpapers() {
+    local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    local WALLPAPER_DIR="$HOME/.local/share/backgrounds"
+
+    mkdir -p resources
+    cd resources
+    git clone https://github.com/Ruanrodrigues20/wallpapers.git
+    cd wallpapers
+    mkdir -p "$WALLPAPER_DIR"
+    bash main.sh 
+    cd ..
+    rm -rf wallpapers
+    cd "$SCRIPT_DIR" 
+}
+
+
+
+setup_aliases_and_tools(){
+    echo -e "\e[1;34m===== 🔥 Configuration of the Aliases =====\e[0m"
+    echo ""
+
+    # Aliases
+    cat <<EOF >> ~/.bash_aliases
+
+# Aliases úteis
+alias ll='ls -lah'
+alias gs='git status'
+alias gp='git push'
+alias gl='git log --oneline --graph'
+alias bat='upower -i /org/freedesktop/UPower/devices/battery_BAT1'
+EOF
+
+    echo "Aliases adicionados a ~/.bash_aliases"
+
+    # Garante que o arquivo ~/.bash_aliases será carregado no .bashrc
+    if ! grep -q "source ~/.bash_aliases" ~/.bashrc; then
+        echo "source ~/.bash_aliases" >> ~/.bashrc
+        echo "Linha 'source ~/.bash_aliases' adicionada ao ~/.bashrc"
+    fi
+}
+
+
+
+
+
+###########################################################################################
+#Configs fot the Gnome 
 configs(){
 
     mkdir -p ~/Projects ~/Downloads ~/Documents ~/Pictures ~/Videos ~/Music ~/Desktop
@@ -61,51 +196,6 @@ configs(){
 	  'libreoffice-startcenter.desktop',
 	  'libreoffice-xsltfilter.desktop'
 	]"
-}
-
-git_config(){
-    echo "Are you sure you want to set up git? (y/n)"
-    read -p "Enter your choice: " choice
-    if [[ "$choice" != "y" && "$choice" != "Y" ]]; then
-        echo "Skipping git setup."
-        return
-    fi
-
-    echo "Setting up git..."
-
-    read -p "Enter your user name: " name
-    echo "Your user name is: $name"
-
-    read -p "Enter your email: " email
-    echo "Your email is: $email"
-
-    git config --global user.name "$name"
-    git config --global user.email "$email"
-
-    echo "Git config set successfully."
-
-    echo "Do you want to generate a new SSH key for Git? (y/n)"
-    read -p "Enter your choice: " ssh_choice
-    if [[ "$ssh_choice" == "y" || "$ssh_choice" == "Y" ]]; then
-        ssh_key_path="$HOME/.ssh/id_ed25519"
-
-        if [[ -f "$ssh_key_path" ]]; then
-            echo "SSH key already exists at $ssh_key_path"
-        else
-            ssh-keygen -t ed25519 -C "$email" -f "$ssh_key_path" -N ""
-            echo "SSH key generated at $ssh_key_path"
-        fi
-
-        eval "$(ssh-agent -s)"
-        ssh-add "$ssh_key_path"
-
-        echo "Public key:"
-        cat "${ssh_key_path}.pub"
-
-        echo "Now add the above public key to your Git provider (e.g., GitHub, GitLab)."
-    else
-        echo "Skipping SSH key generation."
-    fi
 }
 
 
@@ -194,42 +284,4 @@ configs_keyboard(){
     gsettings set org.gnome.desktop.wm.keybindings close "['$CLOSE_SHORTCUT']"
     gsettings set org.gnome.desktop.wm.keybindings minimize "['$MINIMIZE_SHORTCUT']"
 
-}
-
-
-setup_tlp() {
-    if ! detect_battery; then
-        echo -e "\e[33m⚠️  No battery detected. Skipping TLP installation.\e[0m"
-        return 0
-    fi
-
-    echo -e "\n\e[34m🔧 Installing TLP and dependencies...\e[0m"
-
-    if [[ "$DISTRO" == "arch" ]]; then
-        yay -S --noconfirm tlp tlp-rdw &> /dev/null
-        echo -e "\e[32m✔️  TLP installed successfully on Arch.\e[0m"
-        echo -e "\n\e[34m🔌 Enabling TLP service...\e[0m"
-        sudo systemctl enable tlp.service &> /dev/null
-        sudo systemctl start tlp.service &> /dev/null
-
-    elif [[ "$DISTRO" == "debian" ]]; then
-        sudo apt install -y tlp &> /dev/null
-        echo -e "\e[32m✔️  TLP installed successfully on Debian.\e[0m"
-        remove_trava
-        sudo apt install -y tlp tlp-rdw
-        sudo systemctl enable tlp
-        sudo systemctl start tlp
-        sudo tlp-stat -s
-    else
-        echo -e "\e[31m❌  Unsupported distribution for installing TLP.\e[0m"
-        return 1
-    fi
-
-}
-
-set_configs_fastfetch(){
-    unzip resources/fast.zip
-    rm -rf ~/.config/fastfetch
-    mv .config/fastfetch ~/.config/
-    rm -rf .config
 }

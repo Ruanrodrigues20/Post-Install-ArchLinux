@@ -59,16 +59,10 @@ snaps_install() {
 install_flatpaks(){
     echo -e "\e[1;34m===== 🔥 Installing Flatpak Applications =====\e[0m"
     echo ""
-
-    if [ "$DISTRO" = "debian" ]; then
-        flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-    fi
-    
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     # Lista de aplicativos para instalar
-    apps=("com.discordapp.Discord" "org.gnome.DejaDup")
-    if [ "$DISTRO" = "debian" ]; then
-    	apps+=("com.getpostman.Postman")
-    fi
+    apps=("com.discordapp.Discord" "org.gnome.DejaDup" "io.github.realmazharhussain.GdmSettings" 
+        "com.getpostman.Postman" )
     
     install_f "${apps[@]}"
 }
@@ -76,7 +70,6 @@ install_flatpaks(){
 
 
 downloads(){
-
     if [ "$DISTRO" = "debian" ]; then
         echo -e "\e[1;34m===== 📥 Downloading Extra Software =====\e[0m"
         echo ""
@@ -93,7 +86,6 @@ downloads(){
         
         git clone https://github.com/Ruanrodrigues20/intelliJ-install && cd intelliJ-install && bash install.sh
         cd ..
-
     fi
 }
 
