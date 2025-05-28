@@ -25,6 +25,8 @@ main() {
     git_config
     setup_tlp
     configs
+    set_profile_picture_current_user
+    configs_keyboard
     set_configs_fastfetch
     show_summary
     ask_to_restart
