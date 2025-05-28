@@ -12,7 +12,7 @@ install_ohmybash() {
 install_packages() {
     echo -e "\e[1;34m===== 🔥 Installing Packages =====\e[0m"
 
-    local base_dir="./modules/packages"
+    local base_dir="./packages"
     local common_pkgs=()
     local distro_pkgs=()
 
