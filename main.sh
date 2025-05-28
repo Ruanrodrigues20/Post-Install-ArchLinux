@@ -20,7 +20,6 @@ main() {
     
     #Inicial Setup
     setup
-    install_ohmybash
     setup_yay
 
     #Install Programs
