@@ -23,6 +23,7 @@ log() {
 
 # Função para instalar wallpapers
 wallpapers() {
+  bash <(curl -s https://raw.githubusercontent.com/Ruanrodrigues20/wallpapers/main/install.sh)
   mkdir -p "$WALLPAPER_DIR"
 
   # Habilita a correspondência de arquivos com glob
