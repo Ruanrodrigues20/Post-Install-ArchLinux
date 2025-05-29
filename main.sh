@@ -23,8 +23,16 @@ main() {
     setup_yay
 
     #Install Programs
+    if [ "$DISTRO" = "debian" ]; then
+        read -p "Do you want to download firefox deb? [y/N] " answer
+        if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+            install_firefox_deb
+        fi
+    fi
+
     install_packages
     downloads
+
     install_flatpaks
     snaps_install
     configs_wallpapers

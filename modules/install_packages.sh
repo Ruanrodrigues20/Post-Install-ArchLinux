@@ -75,16 +75,21 @@ downloads(){
         echo ""
         # Download and install Fastfetch
         #
+        
+        mkdir -p resources
+        cd resources
 
-        install_firefox_deb
         wget https://github.com/fastfetch-cli/fastfetch/releases/download/2.42.0/fastfetch-linux-amd64.deb
         wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.8.1_all.deb
         wget https://vscode.download.prss.microsoft.com/dbazure/download/stable/848b80aeb52026648a8ff9f7c45a9b0a80641e2e/code_1.100.2-1747260578_amd64.deb
-        
         sudo apt install ./*.deb -y
-        rm *.deb
         
         git clone https://github.com/Ruanrodrigues20/intelliJ-install && cd intelliJ-install && bash install.sh
+        cd ..
+
+        rm *.deb
+        rm -rf intelliJ-install
+
         cd ..
     fi
 }
