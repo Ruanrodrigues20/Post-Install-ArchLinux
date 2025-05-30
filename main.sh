@@ -2,7 +2,7 @@
 set -e
 
 # Load all modules
-for module in modules/*.sh; do
+for module in scripts/*.sh; do
     source "$module"
 done
 

@@ -49,6 +49,29 @@ git_config(){
     fi
 }
 
+corrigir_vscode_sources() {
+    local keyring_path="/usr/share/keyrings/microsoft.gpg"
+    local sources_file="/etc/apt/sources.list.d/vscode.sources"
+
+    sudo mkdir -p "$(dirname "$keyring_path")"
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee "$keyring_path" > /dev/null
+
+    if [ -f "$sources_file" ]; then
+        sudo rm -f "$sources_file"
+    fi
+
+    sudo tee "$sources_file" > /dev/null <<EOF
+Types: deb
+URIs: https://packages.microsoft.com/repos/code/
+Suites: stable
+Components: main
+Signed-By: $keyring_path
+EOF
+
+    sudo apt update
+}
+
+
 
 setup_tlp() {
     if ! detect_battery; then

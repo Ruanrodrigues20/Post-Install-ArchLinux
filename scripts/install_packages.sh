@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-source modules/utils.sh
+source scripts/utils.sh
+source scripts/configs.sh
 
 install_ohmybash() {
     ( bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" )
@@ -91,6 +92,7 @@ downloads(){
         rm -rf intelliJ-install
 
         cd ..
+        corrigir_vscode_sources
     fi
 }
 
