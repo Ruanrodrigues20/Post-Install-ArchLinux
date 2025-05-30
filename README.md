@@ -9,7 +9,7 @@ Post-Install-Linux/
 ├── main.sh               # Main script that sources and runs all modules
 ├── LICENSE.txt           # License file
 ├── wallpapers/           # Directory for wallpapers
-├── modules/              # Modular scripts for each setup task
+├── scripts/              # Modular scripts for each setup task
     ├── configs.sh
     ├── install_packages.sh
     ├── theme.sh
