@@ -45,6 +45,7 @@ main() {
     configs
     set_profile_picture_current_user
     configs_keyboard
+    install_fonts
     set_configs_fastfetch
 
     show_summary

@@ -63,7 +63,7 @@ install_flatpaks(){
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     # Lista de aplicativos para instalar
     apps=("com.discordapp.Discord" "org.gnome.DejaDup" "io.github.realmazharhussain.GdmSettings" 
-        "com.getpostman.Postman" )
+        "com.getpostman.Postman" "io.missioncenter.MissionCenter")
     
     install_f "${apps[@]}"
 }
