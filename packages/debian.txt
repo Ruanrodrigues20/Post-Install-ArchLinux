@@ -15,3 +15,4 @@ gnome-shell-extension-blur-my-shell
 gnome-shell-extension-caffeine
 gnome-shell-extension-user-theme
 gnome-shell-extension-manager
+fonts-powerline
