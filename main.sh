@@ -42,6 +42,7 @@ main() {
     setup_aliases_and_tools
     git_config
     setup_tlp
+    setup_bt_service
     configs
     set_profile_picture_current_user
     configs_keyboard

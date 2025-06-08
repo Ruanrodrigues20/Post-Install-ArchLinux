@@ -73,6 +73,32 @@ EOF
 
 
 
+setup_bt_service() {
+  local DISTRO_ID
+  DISTRO_ID=$(grep '^ID=' /etc/os-release | cut -d= -f2 | tr -d '"')
+
+  if [[ "$DISTRO_ID" == "debian" || "$DISTRO_ID" == "pop" || "$DISTRO_ID" == "pop_os" || "$DISTRO_ID" == "pop-os" ]]; then
+    sudo tee /etc/systemd/system/rfkill-bluetooth.service > /dev/null <<EOF
+[Unit]
+Description=Bloquear Bluetooth no boot
+After=bluetooth.service
+ConditionPathExists=/usr/sbin/rfkill
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/rfkill block bluetooth
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    sudo systemctl daemon-reexec
+    sudo systemctl enable rfkill-bluetooth.service
+  fi
+}
+
+
+
 setup_tlp() {
     if ! detect_battery; then
         echo -e "\e[33m⚠️  No battery detected. Skipping TLP installation.\e[0m"
