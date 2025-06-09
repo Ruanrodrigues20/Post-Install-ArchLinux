@@ -8,6 +8,23 @@ install_ohmybash() {
     ( bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" )
 }
 
+check_dependencies(){
+    echo -e "\e[1;34m===== 🔥 Installing Dependencies =====\e[0m"
+
+    local base_dir="./packages"
+    local dependencies=()
+
+    if [ -f "$base_dir/dependencies.txt" ]; then
+        mapfile -t dependencies < "$base_dir/dependencies.txt"
+    fi
+
+    if [ "$DISTRO" = "debian" ] || [ "$DISTRO" = "arch" ]; then
+        install "${dependencies[@]}"
+    else
+        echo "$DISTRO"
+        return 1
+    fi
+}
 
 
 install_packages() {
@@ -34,6 +51,7 @@ install_packages() {
         return 1
     fi
 }
+
 
 
 snaps_install() {
@@ -96,30 +114,41 @@ downloads(){
     fi
 }
 
-install_firefox_deb(){
 
-    echo -e "\e[1;34m===== 🔥 Installing Firefox (DEB) =====\e[0m"
-    echo ""
-     
-    remove_trava
-    
-    sudo install -d -m 0755 /etc/apt/keyrings
-    
-    wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
-    
-    gpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | awk '/pub/{getline; gsub(/^ +| +$/,""); if($0 == "35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3") print "\nO fingerprint da chave corresponde ("$0").\n"; else print "\nFalha na verificação: o fingerprint ("$0") não corresponde ao esperado.\n"}'
-    echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null
-    echo '
-    Package: *
-    Pin: origin packages.mozilla.org
-    Pin-Priority: 1000
-    ' | sudo tee /etc/apt/preferences.d/mozilla
-    
-    sudo apt remove -y firefox-esr firefox >/dev/null 2>&1
-    if command -v snap >/dev/null 2>&1 && snap list | grep -q "^firefox "; then
-    snap remove firefox >/dev/null 2>&1
+install_firefox_deb() {
+    if [ "$DISTRO" = "debian" ]; then
+        read -p "Do you want to install Firefox (DEB)? [y/N] " answer
+        if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+            echo -e "\e[1;34m===== 🔥 Installing Firefox (DEB) =====\e[0m"
+            echo ""
+
+            remove_trava  # <- suponho que essa função esteja definida
+
+            sudo install -d -m 0755 /etc/apt/keyrings
+
+            wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | \
+                sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
+
+            gpg -n -q --import --import-options import-show /etc/apt/keyrings/packages.mozilla.org.asc | \
+                awk '/pub/{getline; gsub(/^ +| +$/,""); if($0 == "35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3") print "\nO fingerprint da chave corresponde ("$0").\n"; else print "\nFalha na verificação: o fingerprint ("$0") não corresponde ao esperado.\n"}'
+
+            echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | \
+                sudo tee /etc/apt/sources.list.d/mozilla.list > /dev/null
+
+            echo '
+Package: *
+Pin: origin packages.mozilla.org
+Pin-Priority: 1000
+' | sudo tee /etc/apt/preferences.d/mozilla > /dev/null
+
+            sudo apt remove -y firefox-esr firefox >/dev/null 2>&1
+
+            if command -v snap >/dev/null 2>&1 && snap list | grep -q "^firefox "; then
+                sudo snap remove firefox >/dev/null 2>&1
+            fi
+
+            sudo apt update && sudo apt install -y firefox
+        fi
     fi
-
-    sudo apt update && sudo apt install firefox 
 }
 

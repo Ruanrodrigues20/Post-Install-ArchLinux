@@ -4,6 +4,19 @@
 ###########################################################################################
 #Configs fot the program
 
+
+install_theme_grub() {
+    if grub-install --version &>/dev/null; then
+        sudo mkdir -p /boot/grub/themes
+        cd /boot/grub/themes || return
+        sudo git clone https://github.com/vinceliuice/grub2-themes.git
+        cd grub2-themes || return
+        sudo ./install.sh -t tela
+        sudo update-grub
+    fi
+}
+
+
 git_config(){
     echo "Are you sure you want to set up git? (y/n)"
     read -p "Enter your choice: " choice

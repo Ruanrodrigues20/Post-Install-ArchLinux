@@ -1,0 +1,7 @@
+bash-completion
+imagemagick
+git
+wget
+curl
+vim
+tree

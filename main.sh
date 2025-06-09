@@ -21,18 +21,12 @@ main() {
     #Inicial Setup
     setup
     setup_yay
+    check_dependencies
 
     #Install Programs
-    if [ "$DISTRO" = "debian" ]; then
-        read -p "Do you want to download firefox deb? [y/N] " answer
-        if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
-            install_firefox_deb
-        fi
-    fi
-
     install_packages
+    install_firefox_deb
     downloads
-
     install_flatpaks
     snaps_install
     configs_wallpapers
@@ -40,6 +34,7 @@ main() {
 
     #Configs
     setup_aliases_and_tools
+    install_theme_grub
     git_config
     setup_tlp
     setup_bt_service
@@ -54,4 +49,6 @@ main() {
 }
 
 main
+
+
 
