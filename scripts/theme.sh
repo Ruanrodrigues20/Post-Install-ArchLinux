@@ -61,8 +61,8 @@ gtk_theme(){
 	gsettings set org.gnome.desktop.interface cursor-theme 'WhiteSur-cursors'
 	gsettings set org.gnome.desktop.interface accent-color 'blue'
 	gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
-	gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/sequoia-dark.jpg"
-	gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/sequoia-dark.jpg"
+	gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/sequoia.jpeg"
+	gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/sequoia.jpeg"
 	
     echo "Installation of WhiteSur GTK theme completed."
 
