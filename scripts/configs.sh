@@ -16,6 +16,31 @@ install_theme_grub() {
     fi
 }
 
+install_oh_my_bash() {
+    echo -e "\e[1;34m===== 🔥 Installing Oh My Bash =====\e[0m"
+
+    local omb_dir="$HOME/.oh-my-bash"
+
+    if [ -d "$omb_dir" ]; then
+        echo "Oh My Bash já está instalado."
+        return
+    fi
+
+    echo "Cloning Oh My Bash..."
+    git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git "$omb_dir" || {
+        echo "❌ Erro ao clonar o repositório do Oh My Bash."
+        return 1
+    }
+
+    echo "Copiando .bashrc do Oh My Bash..."
+    cp "$omb_dir/templates/bashrc.osh-template" "$HOME/.bashrc"
+
+    echo -e "\n✅ Oh My Bash instalado!"
+    echo "ℹ️ As mudanças serão aplicadas na próxima vez que você abrir o terminal."
+}
+
+
+
 
 git_config(){
     echo "Are you sure you want to set up git? (y/n)"

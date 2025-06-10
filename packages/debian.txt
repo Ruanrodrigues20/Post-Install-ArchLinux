@@ -6,13 +6,10 @@ openjdk-21-jdk
 imagemagick
 python3-pip
 gnome-software-plugin-flatpak
-gnome-software-plugin-deb
-gnome-software-plugin-snap
 gnome-shell-extension-manager
 gnome-shell-extension-appindicator
 gnome-shell-extension-dashtodock
 gnome-shell-extension-blur-my-shell
 gnome-shell-extension-caffeine
 gnome-shell-extension-user-theme
-gnome-shell-extension-manager
 fonts-powerline

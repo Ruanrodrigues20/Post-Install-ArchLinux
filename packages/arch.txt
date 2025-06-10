@@ -1,7 +1,6 @@
 jdk21-openjdk
 python-pip
 visual-studio-code-bin
-gnome-tweaks
 libreoffice-fresh-pt-br
 ttf-ms-fonts
 ttf-jetbrains-mono-nerd

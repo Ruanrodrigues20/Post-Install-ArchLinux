@@ -33,6 +33,7 @@ main() {
     gtk_theme
 
     #Configs
+    install_oh_my_bash
     setup_aliases_and_tools
     install_theme_grub
     git_config
