@@ -19,24 +19,20 @@ install_theme_grub() {
 install_oh_my_bash() {
     echo -e "\e[1;34m===== 🔥 Installing Oh My Bash =====\e[0m"
 
-    local omb_dir="$HOME/.oh-my-bash"
-
-    if [ -d "$omb_dir" ]; then
-        echo "Oh My Bash já está instalado."
+    if [ -d "$HOME/.oh-my-bash" ]; then
+        echo "Oh My Bash is already installed. Skipping..."
         return
     fi
 
     echo "Cloning Oh My Bash..."
-    git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git "$omb_dir" || {
-        echo "❌ Erro ao clonar o repositório do Oh My Bash."
-        return 1
-    }
+    git clone --depth=1 https://github.com/ohmybash/oh-my-bash.git ~/.oh-my-bash
 
-    echo "Copiando .bashrc do Oh My Bash..."
-    cp "$omb_dir/templates/bashrc.osh-template" "$HOME/.bashrc"
+    echo "Setting up ~/.bashrc with the powerline theme..."
+    cp ~/.oh-my-bash/templates/bashrc.osh-template ~/.bashrc
 
-    echo -e "\n✅ Oh My Bash instalado!"
-    echo "ℹ️ As mudanças serão aplicadas na próxima vez que você abrir o terminal."
+    # Set the powerline theme in .bashrc
+    sed -i 's/^OSH_THEME=.*/OSH_THEME="powerline"/' ~/.bashrc
+    echo -e "\e[1;32mOh My Bash has been installed with the 'powerline' theme. Restart the terminal to apply the changes.\e[0m"
 }
 
 
